@@ -11,4 +11,6 @@ public interface UserService extends UserDetailsService {
     UserDto createUser(UserDto user);
 
     UserModel findUserByEmail(String userEmail);
+
+    UserDto getUserByEmail(String userName);
 }
