@@ -34,7 +34,8 @@ public class UserController {
 
     @GetMapping("/status/check")
     public String status() {
-        return "Api is working " + env.getProperty("local.server.port");
+        return "Api UserApi is working " + env.getProperty("local.server.port")
+                + ", token equals = " + env.getProperty("token.secret");
     }
 
 
