@@ -55,9 +55,10 @@ public class AuthFilter extends UsernamePasswordAuthenticationFilter {
             logger.info("Bad credentials");
             throw new RuntimeException(e);
 
-        } finally {
-            logger.info("-----AuthFilter part----");
         }
+//        finally {
+//            logger.info("-----AuthFilter part---- with token " + authentication.toString());
+//        }
     }
 
     @Override
@@ -66,14 +67,15 @@ public class AuthFilter extends UsernamePasswordAuthenticationFilter {
         String userName = ((User)authResult.getPrincipal()).getUsername();
         UserDto userDto = userService.getUserByEmail(userName);
 
-       String token = Jwts.builder().setSubject(userDto.getUserId())
+       String token = Jwts.builder()
+               .setSubject(userDto.getUserId())
                .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(environment.getProperty("token.expiration_time"))))
                .signWith(SignatureAlgorithm.HS512, environment.getProperty("token.secret"))
                .compact();
 
         response.addHeader("token", token);
+        logger.info("=========== token is " + token);
         response.addHeader("userId", userDto.getUserId());
-
-
+        logger.info("=========== userId is " + userDto.getUserId());
     }
 }
