@@ -13,4 +13,6 @@ public interface UserService extends UserDetailsService {
     UserModel findUserByEmail(String userEmail);
 
     UserDto getUserByEmail(String userName);
+
+    UserDto getUserById(String userId);
 }

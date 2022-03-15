@@ -1,5 +1,6 @@
 package ru.koleson.photousersapi.dto;
 
+import com.appsdeveloperblog.photoapp.api.albums.ui.model.AlbumResponseModel;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -7,6 +8,7 @@ import ru.koleson.photousersapi.data.UserEntity;
 import ru.koleson.photousersapi.model.UserModel;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 public class UserDto implements Serializable {
@@ -24,6 +26,8 @@ public class UserDto implements Serializable {
     private String userId;
 
     private String encryptedpassword;
+
+    private List<AlbumResponseModel> albumResponseModelList;
 
     public static UserDto of(UserModel userModel) {
         ModelMapper mapper = new ModelMapper();

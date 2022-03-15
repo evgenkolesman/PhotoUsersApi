@@ -3,14 +3,11 @@ package ru.koleson.photousersapi.controler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.koleson.photousersapi.data.UserEntity;
 import ru.koleson.photousersapi.dto.UserDto;
 import ru.koleson.photousersapi.model.UserModel;
 import ru.koleson.photousersapi.model.UserResponseModel;
@@ -51,5 +48,13 @@ public class UserController {
                 .body(UserResponseModel.of(service.createUser(UserDto.of(userModel))));
     }
 
+    @GetMapping(value = "/{userId}", produces = {
+            MediaType.APPLICATION_JSON_VALUE,
+            MediaType.APPLICATION_XML_VALUE,
+    })
+    public ResponseEntity<UserResponseModel> getUser(@PathVariable String userId) {
 
+        UserResponseModel returnValue = new ModelMapper().map(service.getUserById(userId), UserResponseModel.class);
+        return ResponseEntity.status(HttpStatus.OK).body(returnValue);
+    }
 }
