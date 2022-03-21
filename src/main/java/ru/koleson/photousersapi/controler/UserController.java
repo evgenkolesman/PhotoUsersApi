@@ -8,12 +8,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.koleson.photoappaccmanag.model.AccountRest;
 import ru.koleson.photousersapi.dto.UserDto;
 import ru.koleson.photousersapi.model.UserModel;
 import ru.koleson.photousersapi.model.UserResponseModel;
 import ru.koleson.photousersapi.service.UserService;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -55,6 +57,16 @@ public class UserController {
     public ResponseEntity<UserResponseModel> getUser(@PathVariable String userId) {
 
         UserResponseModel returnValue = new ModelMapper().map(service.getUserById(userId), UserResponseModel.class);
+        return ResponseEntity.status(HttpStatus.OK).body(returnValue);
+    }
+
+    @GetMapping(value = "/getAll", produces = {
+            MediaType.APPLICATION_JSON_VALUE,
+            MediaType.APPLICATION_XML_VALUE,
+    })
+    public ResponseEntity<List<AccountRest>> getUsersFromAccountApi() {
+
+        List<AccountRest> returnValue = service.getAllAccountsFromApi();
         return ResponseEntity.status(HttpStatus.OK).body(returnValue);
     }
 }

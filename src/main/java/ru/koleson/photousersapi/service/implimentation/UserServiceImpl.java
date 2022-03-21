@@ -1,7 +1,11 @@
 package ru.koleson.photousersapi.service.implimentation;
 
 import com.appsdeveloperblog.photoapp.api.albums.ui.model.AlbumResponseModel;
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
@@ -12,10 +16,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import ru.koleson.photoappaccmanag.model.AccountRest;
 import ru.koleson.photousersapi.data.UserEntity;
 import ru.koleson.photousersapi.data.repository.UsersRepository;
 import ru.koleson.photousersapi.dto.UserDto;
 import ru.koleson.photousersapi.model.UserModel;
+import ru.koleson.photousersapi.service.ServiceAccountClient;
+import ru.koleson.photousersapi.service.ServiceAlbumClient;
 import ru.koleson.photousersapi.service.UserService;
 
 import java.util.ArrayList;
@@ -26,11 +33,14 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
+    Logger log = LoggerFactory.getLogger(this.getClass());
 
     private final UsersRepository usersRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final RestTemplate restTemplate;
-    private final Environment env;
+//    private final RestTemplate restTemplate;
+//    private final Environment env;
+    private final ServiceAlbumClient serviceAlbumClient;
+    private final ServiceAccountClient serviceAccountClient;
 
     @Override
     public UserDto createUser(UserDto user) {
@@ -72,23 +82,39 @@ public class UserServiceImpl implements UserService {
         if (userEntity == null) {
             throw new NullPointerException();
         }
-        String albumsUrl = String.format(Objects.requireNonNull(env.getProperty("album.api.endpoint")), userId);
+//        String albumsUrl = String.format(Objects.requireNonNull(env.getProperty("album.api.endpoint")), userId);
 /**
  * exchange consist of
  * URL
  * HTTPMethod
  * RequestEntity
  * ParameterizedTypeReference with any model or list of models you`re import (JSON Array)
+ *
+ * for RestTemplate
  */
-        ResponseEntity<List<AlbumResponseModel>> albumsListResponse = restTemplate.exchange(
-                albumsUrl,
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<List<AlbumResponseModel>>() {
-                });
-        List<AlbumResponseModel> albumsList = albumsListResponse.getBody();
+//        ResponseEntity<List<AlbumResponseModel>> albumsListResponse = restTemplate.exchange(
+//                albumsUrl,
+//                HttpMethod.GET,
+//                null,
+//                new ParameterizedTypeReference<List<AlbumResponseModel>>() {
+//                });
+//        List<AlbumResponseModel> albumsList = albumsListResponse.getBody();
+        List<AlbumResponseModel> albumsList = new ArrayList<>();
+        try {
+           albumsList = serviceAlbumClient.getAlbums(userId);
+        } catch (FeignException e) {
+           log.error(e.getLocalizedMessage());
+        }
         UserDto userDto = UserDto.of(userEntity);
         userDto.setAlbumResponseModelList(albumsList);
         return userDto;
     }
+
+    @Override
+    @SneakyThrows
+    public List<AccountRest> getAllAccountsFromApi(){
+        return serviceAccountClient.getAllAccountsUser();
+    }
+
+
 }
