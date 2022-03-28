@@ -3,6 +3,7 @@ package ru.koleson.photousersapi;
 import feign.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -35,4 +36,5 @@ public class PhotoUsersApiApplication {
         return Logger.Level.FULL;
     }
 
+//TODO make validation of token stable and make zipkin workable
 }

@@ -3,6 +3,7 @@ package ru.koleson.photousersapi.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -22,9 +23,15 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.authorizeRequests().antMatchers("/**")
+        http.authorizeRequests()
+                .antMatchers("/**")
                 .hasIpAddress(environment.getProperty("api.gateway.ip"))
-                .and().addFilter(getAuthentinticationFilter());
+                .antMatchers(HttpMethod.GET, "actuator/**")
+                .hasIpAddress(environment.getProperty("api.gateway.ip"))
+                .antMatchers(HttpMethod.GET, "actuator/circuitbreakerevents")
+                .hasIpAddress(environment.getProperty("api.gateway.ip"))
+                .and()
+                .addFilter(getAuthentinticationFilter());
         http.headers().frameOptions().disable();
     }
 
