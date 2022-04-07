@@ -1,6 +1,5 @@
 package ru.koleson.photousersapi.model;
 
-import com.appsdeveloperblog.photoapp.api.albums.ui.model.AlbumResponseModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,9 +7,6 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import ru.koleson.photousersapi.dto.UserDto;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data

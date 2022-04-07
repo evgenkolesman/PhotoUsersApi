@@ -1,25 +1,20 @@
 package ru.koleson.photousersapi.service.implimentation;
 
-import com.appsdeveloperblog.photoapp.api.albums.ui.model.AlbumResponseModel;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.core.env.Environment;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import ru.koleson.photoappaccmanag.model.AccountRest;
 import ru.koleson.photousersapi.data.UserEntity;
 import ru.koleson.photousersapi.data.repository.UsersRepository;
 import ru.koleson.photousersapi.dto.UserDto;
+import ru.koleson.photousersapi.model.AccountRest;
+import ru.koleson.photousersapi.model.AlbumResponseModel;
 import ru.koleson.photousersapi.model.UserModel;
 import ru.koleson.photousersapi.service.ServiceAccountClient;
 import ru.koleson.photousersapi.service.ServiceAlbumClient;
@@ -27,7 +22,6 @@ import ru.koleson.photousersapi.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 @RequiredArgsConstructor

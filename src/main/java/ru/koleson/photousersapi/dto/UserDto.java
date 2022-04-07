@@ -1,10 +1,10 @@
 package ru.koleson.photousersapi.dto;
 
-import com.appsdeveloperblog.photoapp.api.albums.ui.model.AlbumResponseModel;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import ru.koleson.photousersapi.data.UserEntity;
+import ru.koleson.photousersapi.model.AlbumResponseModel;
 import ru.koleson.photousersapi.model.UserModel;
 
 import java.io.Serializable;

@@ -1,6 +1,5 @@
 package ru.koleson.photousersapi.model;
 
-import com.appsdeveloperblog.photoapp.api.albums.ui.model.AlbumResponseModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

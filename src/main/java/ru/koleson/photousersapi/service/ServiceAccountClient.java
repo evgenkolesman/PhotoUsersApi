@@ -1,11 +1,10 @@
 package ru.koleson.photousersapi.service;
 
-import com.appsdeveloperblog.photoapp.api.albums.ui.model.AlbumResponseModel;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.koleson.photoappaccmanag.model.AccountRest;
+import ru.koleson.photousersapi.model.AccountRest;
 
 import java.util.ArrayList;
 import java.util.List;

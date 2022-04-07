@@ -2,8 +2,8 @@ package ru.koleson.photousersapi.service;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
-import ru.koleson.photoappaccmanag.model.AccountRest;
 import ru.koleson.photousersapi.dto.UserDto;
+import ru.koleson.photousersapi.model.AccountRest;
 import ru.koleson.photousersapi.model.UserModel;
 
 import java.util.List;

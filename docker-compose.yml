@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  db:
+    image: mysql
+    container_name: mysqldb-container
+    environment:
+      - MYSQL_DATABASE=mysqldb
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_USER=root
+      - PGDATA=/var/lib/mysql
+    ports:
+      - 3306:3306
+    restart: always
+  app:
+    image: mysql
+    container_name: mysqldb-container
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/mysqldb
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=password
+#    ports:
+#        - 127.0.0.1/8082:8082
+    depends_on:
+        - mysql
